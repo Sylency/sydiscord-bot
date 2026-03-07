@@ -2,9 +2,9 @@ import { Client, ActivityType } from "discord.js";
 import { BotEvent } from "../types/index.js";
 
 const event: BotEvent = {
-  name: "ready",
+  name: "clientReady",
   once: true,
-  execute(client: Client) {
+  execute(client: Client<true>) {
     if (!client.user) return;
 
     console.log(`\n🤖 Logged in as ${client.user.tag}`);

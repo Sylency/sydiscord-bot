@@ -1,6 +1,7 @@
 import {
   ChatInputCommandInteraction,
   Client,
+  ClientEvents,
   Collection,
   SlashCommandBuilder,
   SlashCommandOptionsOnlyBuilder,
@@ -17,9 +18,9 @@ export interface BotCommand {
 }
 
 export interface BotEvent {
-  name: string;
+  name: keyof ClientEvents;
   once?: boolean;
-  execute: (...args: unknown[]) => Promise<void> | void;
+  execute: (...args: any[]) => Promise<void> | void;
 }
 
 export interface ExtendedClient extends Client {
