@@ -20,9 +20,10 @@ client.commands = new Collection<string, BotCommand>();
 
 // ─── Load Commands ────────────────────────────────────────────────────────────
 const commandsPath = join(__dirname, "commands");
-const commandFiles = readdirSync(commandsPath).filter(
-  (file) => file.endsWith(".ts") || file.endsWith(".js")
-);
+const isRuntimeModuleFile = (file: string) =>
+  file.endsWith(".js") || (file.endsWith(".ts") && !file.endsWith(".d.ts"));
+
+const commandFiles = readdirSync(commandsPath).filter(isRuntimeModuleFile);
 
 for (const file of commandFiles) {
   const filePath = join(commandsPath, file);
@@ -37,9 +38,7 @@ for (const file of commandFiles) {
 
 // ─── Load Events ─────────────────────────────────────────────────────────────
 const eventsPath = join(__dirname, "events");
-const eventFiles = readdirSync(eventsPath).filter(
-  (file) => file.endsWith(".ts") || file.endsWith(".js")
-);
+const eventFiles = readdirSync(eventsPath).filter(isRuntimeModuleFile);
 
 for (const file of eventFiles) {
   const filePath = join(eventsPath, file);

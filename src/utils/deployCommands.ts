@@ -18,9 +18,10 @@ if (!token || !clientId) {
 const commands: RESTPostAPIChatInputApplicationCommandsJSONBody[] = [];
 
 const commandsPath = join(__dirname, "../commands");
-const commandFiles = readdirSync(commandsPath).filter(
-  (file) => file.endsWith(".ts") || file.endsWith(".js")
-);
+const isRuntimeModuleFile = (file: string) =>
+  file.endsWith(".js") || (file.endsWith(".ts") && !file.endsWith(".d.ts"));
+
+const commandFiles = readdirSync(commandsPath).filter(isRuntimeModuleFile);
 
 for (const file of commandFiles) {
   const command: BotCommand = require(join(commandsPath, file));
