@@ -7,6 +7,7 @@ import {
   SlashCommandOptionsOnlyBuilder,
   SlashCommandSubcommandsOnlyBuilder,
 } from "discord.js";
+import { TicketStore } from "../utils/ticketStore.js";
 
 export interface BotCommand {
   data:
@@ -25,4 +26,5 @@ export interface BotEvent {
 
 export interface ExtendedClient extends Client {
   commands: Collection<string, BotCommand>;
+  ticketStore: TicketStore;
 }

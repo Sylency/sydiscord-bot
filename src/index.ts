@@ -3,6 +3,7 @@ import { readdirSync } from "fs";
 import { join } from "path";
 import * as dotenv from "dotenv";
 import { BotCommand, BotEvent, ExtendedClient } from "./types/index.js";
+import { TicketStore } from "./utils/ticketStore.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ const client = new Client({
 }) as ExtendedClient;
 
 client.commands = new Collection<string, BotCommand>();
+client.ticketStore = new TicketStore();
 
 // ─── Load Commands ────────────────────────────────────────────────────────────
 const commandsPath = join(__dirname, "commands");
