@@ -4,6 +4,10 @@ import {
   handleTicketButtonInteraction,
   handleTicketModalSubmit,
 } from "../utils/ticketSystem.js";
+import {
+  handleVerificationButton,
+  handleVerificationModal,
+} from "../utils/verificationSystem.js";
 
 const event: BotEvent = {
   name: "interactionCreate",
@@ -35,6 +39,31 @@ const event: BotEvent = {
         interaction.customId.startsWith("ticket:")
       ) {
         await handleTicketModalSubmit(interaction);
+        return;
+      }
+
+      if (
+        interaction.isButton() &&
+        interaction.customId.startsWith("verify:")
+      ) {
+        await handleVerificationButton(interaction);
+        return;
+      }
+
+      if (
+        interaction.isModalSubmit() &&
+        interaction.customId.startsWith("verify:")
+      ) {
+        await handleVerificationModal(interaction);
+        return;
+      }
+
+      if (
+        interaction.isButton() &&
+        interaction.customId.startsWith("giveaway:")
+      ) {
+        const client = interaction.client as ExtendedClient;
+        await client.giveawayManager.handleEntry(interaction);
       }
     } catch (error) {
       const interactionName = interaction.isChatInputCommand()

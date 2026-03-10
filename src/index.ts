@@ -4,6 +4,15 @@ import { join } from "path";
 import * as dotenv from "dotenv";
 import { BotCommand, BotEvent, ExtendedClient } from "./types/index.js";
 import { TicketStore } from "./utils/ticketStore.js";
+import { AutomodStore } from "./utils/automodStore.js";
+import { LevelsStore } from "./utils/levelsStore.js";
+import { WelcomeStore } from "./utils/welcomeStore.js";
+import { AutoRoleStore } from "./utils/autoRoleStore.js";
+import { ModerationStore } from "./utils/moderationStore.js";
+import { VerificationStore } from "./utils/verificationStore.js";
+import { GiveawayStore } from "./utils/giveawayStore.js";
+import { GiveawayManager } from "./utils/giveawaySystem.js";
+import { MusicManager } from "./utils/musicSystem.js";
 
 dotenv.config();
 
@@ -13,12 +22,23 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildVoiceStates,
   ],
   partials: [Partials.Channel],
 }) as ExtendedClient;
 
 client.commands = new Collection<string, BotCommand>();
 client.ticketStore = new TicketStore();
+client.automodStore = new AutomodStore();
+client.levelsStore = new LevelsStore();
+client.welcomeStore = new WelcomeStore();
+client.autoRoleStore = new AutoRoleStore();
+client.moderationStore = new ModerationStore();
+client.verificationStore = new VerificationStore();
+client.giveawayStore = new GiveawayStore();
+client.giveawayManager = new GiveawayManager(client);
+client.musicManager = new MusicManager();
 
 // ─── Load Commands ────────────────────────────────────────────────────────────
 const commandsPath = join(__dirname, "commands");

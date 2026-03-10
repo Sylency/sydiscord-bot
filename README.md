@@ -89,6 +89,14 @@ Then re-run `npm run deploy` to register the new command. That's it!
 | `/help` | Lists all commands |
 | `/serverinfo` | Shows server details |
 | `/userinfo [user]` | Shows user details |
+| `/automod` | Configure automod rules and bad words |
+| `/mod` | Moderation tools (ban, kick, timeout, warn, purge, lock, etc.) |
+| `/levels` | Level system (profile, leaderboard, config) |
+| `/welcome` | Welcome system configuration and test |
+| `/autorole` | Auto role configuration |
+| `/verify` | Verification panel and settings |
+| `/giveaway` | Giveaway start/end/list/reroll |
+| `/music` | Direct URL music system |
 | `/ticket panel` | Publishes the public ticket panel |
 | `/ticket config` | Sets category, staff role, log channel and limits |
 | `/ticket stats` | Shows ticket stats and current setup |
