@@ -7,9 +7,26 @@ export interface WelcomeConfig {
   message: string;
   embedTitle: string;
   embedDescription: string;
+  embedImageUrl: string | null;
+  embedThumbnailUrl: string | null;
+  footerText: string | null;
+  footerIconUrl: string | null;
+  fields: WelcomeField[];
+  buttons: WelcomeButton[];
   color: number;
   mentionUser: boolean;
   includeAvatar: boolean;
+}
+
+export interface WelcomeField {
+  name: string;
+  value: string;
+  inline?: boolean;
+}
+
+export interface WelcomeButton {
+  label: string;
+  url: string;
 }
 
 interface GuildWelcomeState {
@@ -27,6 +44,12 @@ const createDefaultConfig = (): WelcomeConfig => ({
   embedTitle: "Welcome!",
   embedDescription:
     "Hey {user}, you are the **#{memberCount}** member of **{server}**.",
+  embedImageUrl: null,
+  embedThumbnailUrl: null,
+  footerText: null,
+  footerIconUrl: null,
+  fields: [],
+  buttons: [],
   color: 0x6c5ce7,
   mentionUser: true,
   includeAvatar: true,
@@ -57,6 +80,23 @@ export class WelcomeStore {
           config: {
             ...createDefaultConfig(),
             ...(guildState?.config ?? {}),
+            fields: Array.isArray(guildState?.config?.fields)
+              ? guildState?.config?.fields
+                  .filter((entry): entry is WelcomeField => !!entry)
+                  .map((entry) => ({
+                    name: entry.name ?? "Field",
+                    value: entry.value ?? "-",
+                    inline: entry.inline ?? false,
+                  }))
+              : [],
+            buttons: Array.isArray(guildState?.config?.buttons)
+              ? guildState?.config?.buttons
+                  .filter((entry): entry is WelcomeButton => !!entry)
+                  .map((entry) => ({
+                    label: entry.label ?? "Button",
+                    url: entry.url ?? "https://example.com",
+                  }))
+              : [],
           },
         } satisfies GuildWelcomeState,
       ])
