@@ -8,6 +8,7 @@ import {
   handleVerificationButton,
   handleVerificationModal,
 } from "../utils/verificationSystem.js";
+import { handleWelcomeModal } from "../utils/welcomeModal.js";
 
 const event: BotEvent = {
   name: "interactionCreate",
@@ -55,6 +56,14 @@ const event: BotEvent = {
         interaction.customId.startsWith("verify:")
       ) {
         await handleVerificationModal(interaction);
+        return;
+      }
+
+      if (
+        interaction.isModalSubmit() &&
+        interaction.customId.startsWith("welcome:")
+      ) {
+        await handleWelcomeModal(interaction);
         return;
       }
 

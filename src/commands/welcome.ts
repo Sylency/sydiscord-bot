@@ -7,6 +7,7 @@ import {
 } from "discord.js";
 import { BotCommand, ExtendedClient } from "../types/index.js";
 import { buildWelcomePayload } from "../utils/welcomeSystem.js";
+import { showWelcomeModal } from "../utils/welcomeModal.js";
 
 const command: BotCommand = {
   data: new SlashCommandBuilder()
@@ -123,6 +124,11 @@ const command: BotCommand = {
     )
     .addSubcommand((subcommand) =>
       subcommand.setName("test").setDescription("Send a test welcome message")
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("edit")
+        .setDescription("Open a modal to edit the welcome embed")
     ),
 
   async execute(interaction: ChatInputCommandInteraction) {
@@ -285,6 +291,11 @@ const command: BotCommand = {
         content: "Test welcome message sent.",
         ephemeral: true,
       });
+      return;
+    }
+
+    if (subcommand === "edit") {
+      await showWelcomeModal(interaction);
     }
   },
 };
