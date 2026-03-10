@@ -4,6 +4,7 @@ import {
   createAudioPlayer,
   createAudioResource,
   entersState,
+  DiscordGatewayAdapterCreator,
   joinVoiceChannel,
   StreamType,
   VoiceConnection,
@@ -32,7 +33,8 @@ export class MusicManager {
     const connection = joinVoiceChannel({
       channelId: channel.id,
       guildId: channel.guild.id,
-      adapterCreator: channel.guild.voiceAdapterCreator,
+      adapterCreator:
+        channel.guild.voiceAdapterCreator as unknown as DiscordGatewayAdapterCreator,
       selfDeaf: true,
     });
 
